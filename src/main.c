@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "SDL2/SDL.h"
+#include "chip8.h"
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_EVERYTHING);
+
+    // create a window titled "Chip 8 Window" with a width of 640px and a height of 320px
     SDL_Window* window = SDL_CreateWindow(
-        "Chip8 Window", 
+        EMULATOR_WINDOW_TITLE, 
         SDL_WINDOWPOS_UNDEFINED, 
         SDL_WINDOWPOS_UNDEFINED,
-        640, 320, SDL_WINDOW_SHOWN
+        CHIP8_WIDTH * CHIP8_WINDOW_MULTIPLIER, 
+        CHIP8_HEIGHT * CHIP8_WINDOW_MULTIPLIER, 
+        SDL_WINDOW_SHOWN
     );
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_TEXTUREACCESS_TARGET);
@@ -20,17 +25,17 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        SDL_Rect r;
+        SDL_Rect rectangle;
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
         
-        r.x = 0;
-        r.y = 0;
-        r.w = 40;
-        r.h = 40;
+        rectangle.x = 0;
+        rectangle.y = 0;
+        rectangle.w = 40;
+        rectangle.h = 40;
 
-        SDL_RenderFillRect(renderer, &r);
+        SDL_RenderFillRect(renderer, &rectangle);
         SDL_RenderPresent(renderer);
     }
 
