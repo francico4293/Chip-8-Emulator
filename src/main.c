@@ -2,12 +2,18 @@
 #include <stdbool.h>
 #include "SDL2/SDL.h"
 #include "chip8.h"
+#include "chip8_stack.h"
 
 int main(int argc, char* argv[]) {
     struct chip8 chip8;
 
-    chip8MemorySet(&chip8.memory, 0x400, 'Z');
-    printf("%c\n", chip8MemoryGet(&chip8.memory, 0x400));
+    chip8.registers.SP = 0;
+
+    chip8StackPush(&chip8, 0xff);
+    chip8StackPush(&chip8, 0xaa);
+
+    printf("%x\n", chip8StackPop(&chip8));
+    printf("%x\n", chip8StackPop(&chip8));
 
     SDL_Init(SDL_INIT_EVERYTHING);
 
