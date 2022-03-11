@@ -4,6 +4,11 @@
 #include "chip8.h"
 
 int main(int argc, char* argv[]) {
+    struct chip8 chip8;
+
+    chip8MemorySet(&chip8.memory, 0x400, 'Z');
+    printf("%c\n", chip8MemoryGet(&chip8.memory, 0x400));
+
     SDL_Init(SDL_INIT_EVERYTHING);
 
     // create a window titled "Chip 8 Window" with a width of 640px and a height of 320px
