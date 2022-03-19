@@ -4,6 +4,7 @@
 #include "chip8.h"
 #include "chip8_stack.h"
 #include "chip8_keyboard.h"
+#include "chip8_screen.h"
 
 char keyboardMap[CHIP8_TOTAL_KEYS] = {
     SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_5,
@@ -15,6 +16,8 @@ int main(int argc, char* argv[]) {
     struct chip8 chip8;
 
     chip8Init(&chip8);
+
+    chip8ScreenDrawSprite(&chip8.screen, 5, 5, &chip8.memory.memory[55], 5);
 
     SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -49,17 +52,23 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        SDL_Rect rectangle;
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
-        
-        rectangle.x = 0;
-        rectangle.y = 0;
-        rectangle.w = 40;
-        rectangle.h = 40;
 
-        SDL_RenderFillRect(renderer, &rectangle);
+        for (int x = 0; x < CHIP8_WIDTH; x++) {
+            for (int y = 0; y < CHIP8_HEIGHT; y++) {
+                if (chip8ScreenIsSet(&chip8.screen, x, y)) {
+                    SDL_Rect rectangle;
+                    rectangle.x = x * CHIP8_WINDOW_MULTIPLIER;
+                    rectangle.y = y * CHIP8_WINDOW_MULTIPLIER;
+                    rectangle.w = CHIP8_WINDOW_MULTIPLIER;
+                    rectangle.h = CHIP8_WINDOW_MULTIPLIER;
+                    SDL_RenderFillRect(renderer, &rectangle);
+                }
+            }
+        }
+        
         SDL_RenderPresent(renderer);
     }
 

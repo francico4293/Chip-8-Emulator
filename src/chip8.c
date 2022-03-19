@@ -22,5 +22,6 @@ char chip8DefaultCharSet[] = {
 
 void chip8Init(struct chip8* chip8) {
     memset(chip8, 0, sizeof(struct chip8));
+    memset(chip8->screen.pixels, 0, sizeof(chip8->screen.pixels));
     memcpy(chip8->memory.memory, chip8DefaultCharSet, sizeof(chip8DefaultCharSet));
 }
