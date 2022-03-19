@@ -14,11 +14,7 @@ char keyboardMap[CHIP8_TOTAL_KEYS] = {
 int main(int argc, char* argv[]) {
     struct chip8 chip8;
 
-    printf("%d\n", chip8KeyboardMap(keyboardMap, 'a'));
-
-    chip8KeyboardDown(&chip8.keyboard, 0x0f);
-    bool isDown = chip8KeyboardIsDown(&chip8.keyboard, 0x0f);
-    printf("%i\n", isDown);
+    chip8Init(&chip8);
 
     SDL_Init(SDL_INIT_EVERYTHING);
 
